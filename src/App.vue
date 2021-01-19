@@ -1,19 +1,50 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3 + Vite" />
+  <Tree class="tree" :root="node" />
 </template>
 
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+import Tree from './components/Tree.vue'
+
+const node_a = {
+  name: 'lol',
+  children: [],
+}
+
+const node_b = {
+  name: 'magique',
+  children: [node_a],
+}
+
+const node_c = {
+  name: 'celeste',
+  children: [node_b, node_a],
+}
+
+const node = {
+  name: 'licorne',
+  children: [node_c, node_b, node_a],
+}
 </script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+}
+</style>
+
+<style scoped>
+.tree {
+  background-color: #269;
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.5) 2px,
+      transparent 2px
+    ),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.5) 2px, transparent 2px),
+    linear-gradient(rgba(255, 255, 255, 0.28) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.28) 1px, transparent 1px);
+  background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+  background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
 }
 </style>
