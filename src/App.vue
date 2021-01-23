@@ -36,6 +36,8 @@ const node = {
 
 <style scoped>
 .tree {
+  width: 100%;
+  height: 100%;
   background-color: #269;
   background-image: linear-gradient(
       rgba(255, 255, 255, 0.5) 2px,
