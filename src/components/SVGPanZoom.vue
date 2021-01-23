@@ -16,7 +16,7 @@
 <script setup>
 import { defineProps, computed, ref, reactive } from 'vue'
 
-const SCALE_FACTOR = 1.6
+const SCALE_FACTOR = 1.2
 
 const { viewBox } = defineProps({
   viewBox: String,
