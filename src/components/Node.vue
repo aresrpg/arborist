@@ -72,7 +72,7 @@ function connector(first, second) {
 
   const margin = to_x - from_x
 
-  return `M ${from_x},${from_y} h ${margin/2} V ${to_y} h ${margin/2}`
+  return `M ${from_x},${from_y} h ${margin / 2} V ${to_y} h ${margin / 2}`
 }
 
 const { node } = defineProps({
