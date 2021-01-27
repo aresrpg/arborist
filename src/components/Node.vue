@@ -1,15 +1,4 @@
 <template>
-  <template v-for="(child, i) in node.children" :key="i">
-    <line
-      stroke="black"
-      :x1="node.x + node.width"
-      :y1="node.y + node.height / 2"
-      :x2="child.x"
-      :y2="child.y + child.height / 2"
-    />
-    <Node :node="child" />
-  </template>
-
   <rect
     :x="node.x"
     :y="node.y"
@@ -34,15 +23,16 @@
   >
     {{ node.name }}</text
   >
+  <template v-for="(child, i) in node.children" :key="i">
+    <path
+      stroke="black"
+      fill="none"
+      stroke-width="2"
+      :d="connector(node, child)"
+    />
+    <Node :node="child" />
+  </template>
 </template>
-
-<script setup>
-import { defineProps } from 'vue'
-
-const { node } = defineProps({
-  node: Object,
-})
-</script>
 
 <script>
 function textDimensions(text) {
@@ -69,4 +59,23 @@ export function dimensions({ name }) {
     height: text.height + 10,
   }
 }
+</script>
+
+<script setup>
+import { defineProps } from 'vue'
+
+function connector(first, second) {
+  const from_x = first.x + first.width
+  const from_y = first.y + first.height / 2
+  const to_x = second.x
+  const to_y = second.y + second.height / 2
+
+  const margin = to_x - from_x
+
+  return `M ${from_x},${from_y} h ${margin/2} V ${to_y} h ${margin/2}`
+}
+
+const { node } = defineProps({
+  node: Object,
+})
 </script>
