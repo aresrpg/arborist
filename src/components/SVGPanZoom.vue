@@ -18,7 +18,7 @@ import { defineProps, computed, ref, reactive } from 'vue'
 
 const SCALE_FACTOR = 1.2
 
-const { viewBox } = defineProps({
+const props = defineProps({
   viewBox: String,
 })
 
@@ -43,7 +43,9 @@ const dragging = reactive({
 })
 
 const transformedViewBox = computed(() => {
-  const [x, y, width, height] = viewBox.split(' ').map((v) => parseFloat(v))
+  const [x, y, width, height] = props.viewBox
+    .split(' ')
+    .map((v) => parseFloat(v))
 
   return [
     x + translation.x + dragging.x,
@@ -90,11 +92,7 @@ function onMouseUp(event) {
 }
 
 function onWheel(event) {
-  console.log(event)
-
   const delta = event.deltaY > 0 ? SCALE_FACTOR : 1 / SCALE_FACTOR
-
-  console.log(delta)
 
   const point = screenToSvg(event.clientX, event.clientY)
 

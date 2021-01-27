@@ -1,8 +1,12 @@
 <template>
-  <Tree class="tree" :root="node" />
+  <Tree class="tree" :root="node" @select="select" :selected="selected" />
 </template>
 
 <script setup>
+import { ref } from 'vue'
+
+import equal from 'fast-deep-equal'
+
 import Tree from './components/Tree.vue'
 
 const node_a = {
@@ -23,6 +27,13 @@ const node_c = {
 const node = {
   name: 'licorne',
   children: [node_c, node_b, node_a],
+}
+
+let selected = ref(null)
+
+function select(path) {
+  if (equal(selected.value, path)) selected.value = null
+  else selected.value = path
 }
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <component :is="node.component" :node="node" />
+  <component :is="node.component" :node="node" :path="path" v-bind="$attrs" />
   <template v-for="(child, i) in node.children" :key="i">
     <path
       stroke="black"
@@ -7,15 +7,21 @@
       stroke-width="2"
       :d="connector(node, child)"
     />
-    <ConnectedNode :is="child.component" :node="child" />
+    <ConnectedNode
+      :is="child.component"
+      :node="child"
+      :path="[...path, i]"
+      v-bind="$attrs"
+    />
   </template>
 </template>
 
 <script setup>
 import { defineProps } from 'vue'
 
-const { node } = defineProps({
+defineProps({
   node: Object,
+  path: Array,
 })
 
 function connector(first, second) {

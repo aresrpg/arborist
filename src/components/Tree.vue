@@ -1,6 +1,6 @@
 <template>
   <SVGPanZoom :viewBox="`0 0 ${node.max_x} ${node.max_y}`">
-    <ConnectedNode :node="node" />
+    <ConnectedNode :node="node" :path="[]" v-bind="$attrs" />
   </SVGPanZoom>
 </template>
 
@@ -11,8 +11,11 @@ import ConnectedNode from './ConnectedNode.vue'
 import Node, { dimensions } from './Node.vue'
 import SVGPanZoom from './SVGPanZoom.vue'
 
-const { root } = defineProps({
+import equal from 'fast-deep-equal'
+
+const props = defineProps({
   root: Object,
+  selected: Array,
 })
 
 const MARGIN = 10
@@ -22,13 +25,16 @@ function convert(
   x = 0,
   y = 0,
   { width, height } = dimensions(node),
-  max_width = width
+  max_width = width,
+  path = []
 ) {
   const children_dimensions = node.children.map((child) => dimensions(child))
   const children_width = children_dimensions.map(({ width }) => width)
 
   const next_max_width = Math.max(...children_width, 0)
   const child_x = x + max_width + MARGIN
+
+  const selected = equal(props.selected, path)
 
   const { children, child_y } = node.children.reduce(
     ({ child_y, children }, child, i) => {
@@ -37,7 +43,8 @@ function convert(
         child_x,
         child_y,
         children_dimensions[i],
-        next_max_width
+        next_max_width,
+        [...path, i]
       )
 
       const [last_child] = node.children.slice(-1)
@@ -68,10 +75,9 @@ function convert(
     max_x:
       Math.max(...children.map(({ max_x }) => MARGIN + max_x), 0) + max_width,
     component: Node,
+    selected,
   }
 }
 
-console.log(convert(root))
-
-const node = computed(() => convert(root))
+const node = computed(() => convert(props.root))
 </script>

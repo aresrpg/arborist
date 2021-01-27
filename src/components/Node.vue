@@ -1,11 +1,11 @@
 <template>
-  <g>
+  <g @click="select">
     <rect
       :x="node.x"
       :y="node.y"
       :width="node.width"
       :height="node.height"
-      fill="#444444"
+      :fill="node.selected ? 'red' : '#444444'"
     />
     <rect
       :x="node.x"
@@ -55,9 +55,16 @@ export function dimensions({ name }) {
 </script>
 
 <script setup>
-import { defineProps } from 'vue'
+import { defineProps, defineEmit } from 'vue'
 
-const { node } = defineProps({
+const props = defineProps({
   node: Object,
+  path: Array,
 })
+
+const emit = defineEmit(['select'])
+
+function select() {
+  emit('select', props.path)
+}
 </script>
