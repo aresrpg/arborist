@@ -9,12 +9,12 @@
   <rect
     :x="node.x"
     :y="node.y"
-    :width="20"
+    :width="25"
     :height="node.height"
     fill="rgb(143, 62, 209)"
   />
   <text
-    :x="node.x + 25"
+    :x="node.x + 30"
     :y="node.y + 5"
     dominant-baseline="hanging"
     :width="node.width"
@@ -30,7 +30,7 @@
       stroke-width="2"
       :d="connector(node, child)"
     />
-    <Node :node="child" />
+    <component :is="child.component" :node="child" />
   </template>
 </template>
 
@@ -55,7 +55,7 @@ function textDimensions(text) {
 export function dimensions({ name }) {
   const text = textDimensions(name)
   return {
-    width: text.width + 30,
+    width: text.width + 35,
     height: text.height + 10,
   }
 }

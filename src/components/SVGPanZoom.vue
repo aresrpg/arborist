@@ -36,7 +36,6 @@ const svg = ref(null)
 
 const dragging = reactive({
   active: false,
-  started: false,
   x: 0,
   y: 0,
   startX: 0,
@@ -55,9 +54,13 @@ const transformedViewBox = computed(() => {
 })
 
 function onMouseDown(event) {
-  dragging.active = true
-  dragging.startX = event.clientX
-  dragging.startY = event.clientY
+  if (event.target === svg.value) {
+    dragging.active = true
+    dragging.startX = event.clientX
+    dragging.startY = event.clientY
+
+    event.preventDefault()
+  }
 }
 
 function screenToSvg(x, y) {
@@ -69,8 +72,6 @@ function screenToSvg(x, y) {
 
 function onMouseMove(event) {
   if (!dragging.active) return
-
-  dragging.started = true
 
   const from = screenToSvg(dragging.startX, dragging.startY)
   const to = screenToSvg(event.clientX, event.clientY)
@@ -86,10 +87,6 @@ function onMouseUp(event) {
   translation.y += dragging.y
   dragging.x = 0
   dragging.y = 0
-}
-
-function onSelectStart(event) {
-  if (dragging.started) event.preventDefault()
 }
 
 function onWheel(event) {
@@ -113,6 +110,10 @@ function onWheel(event) {
 
 <style scoped>
 svg {
-  cursor: move;
+  cursor: grab;
+}
+
+svg:deep(*) {
+  cursor: auto;
 }
 </style>

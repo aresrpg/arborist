@@ -1,6 +1,6 @@
 <template>
   <SVGPanZoom :viewBox="`0 0 ${node.max_x} ${node.max_y}`">
-    <Node :node="node" />
+    <component :is="node.component" :node="node" />
   </SVGPanZoom>
 </template>
 
@@ -67,6 +67,7 @@ function convert(
     max_y: Math.max(child_y, y + height),
     max_x:
       Math.max(...children.map(({ max_x }) => MARGIN + max_x), 0) + max_width,
+    component: Node,
   }
 }
 
