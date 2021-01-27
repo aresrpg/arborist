@@ -1,14 +1,14 @@
 <template>
   <SVGPanZoom :viewBox="`0 0 ${node.max_x} ${node.max_y}`">
-    <component :is="node.component" :node="node" />
+    <ConnectedNode :node="node" />
   </SVGPanZoom>
 </template>
 
 <script setup>
 import { defineProps, computed } from 'vue'
 
+import ConnectedNode from './ConnectedNode.vue'
 import Node, { dimensions } from './Node.vue'
-
 import SVGPanZoom from './SVGPanZoom.vue'
 
 const { root } = defineProps({
