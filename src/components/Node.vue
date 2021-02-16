@@ -5,14 +5,16 @@
       :y="node.y"
       :width="node.width"
       :height="node.height"
-      :fill="node.selected ? 'red' : '#444444'"
+      :class="`fill-current ${
+        node.selected ? 'text-red-500' : 'text-gray-700'
+      }`"
     />
     <rect
       :x="node.x"
       :y="node.y"
       :width="25"
       :height="node.height"
-      fill="rgb(143, 62, 209)"
+      class="fill-current text-gray-400"
     />
     <text
       :x="node.x + 30"
