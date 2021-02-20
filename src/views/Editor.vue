@@ -7,19 +7,23 @@
       @select="(i) => (selectedTree = i)"
     />
     <div class="w-full flex flex-col">
-      <Toolbar :instances="trees[selectedTree].instances" />
+      <Toolbar
+        :instances="trees[selectedTree].instances"
+        @debug="(instance) => (debuggedInstance = instance)"
+      />
       <Tree
         class="w-full h-full tree bg-green-700"
         :root="tree"
         @select="select"
         :selected="selected"
+        :status="status"
       />
     </div>
   </main>
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, watch, watchEffect } from 'vue'
 import equal from 'fast-deep-equal'
 
 import Tree from '../components/Tree.vue'
@@ -39,26 +43,53 @@ function parseNode(node) {
   }
 }
 
-let selectedTree = ref(0)
+const selectedTree = ref(0)
 
-const tree = computed(() => ({
-  name: `Root (${trees[selectedTree.value].id})`,
-  children: [
-    parseNode(
-      new DOMParser().parseFromString(
-        trees[selectedTree.value].tree,
-        'text/xml'
-      ).documentElement
-    ),
-  ],
-}))
+const tree = computed(() =>
+  parseNode(
+    new DOMParser().parseFromString(trees[selectedTree.value].tree, 'text/xml')
+      .documentElement
+  )
+)
 
-let selected = ref(null)
+const selected = ref(null)
 
 function select(path) {
   if (equal(selected.value, path)) selected.value = null
   else selected.value = path
 }
+
+const status = ref({
+  0: 'FAILURE',
+  1: 'RUNNING',
+  2: 'SUCCESS',
+})
+
+const debuggedInstance = ref(null)
+
+let eventSource = null
+watchEffect(() => {
+  if (eventSource) {
+    console.log('Closing', eventSource.url)
+    eventSource.close()
+    eventSource = null
+  }
+
+  if (debuggedInstance.value) {
+    eventSource = new EventSource(
+      `http://localhost:4242/behavior/${debuggedInstance.value}`
+    )
+
+    status.value = {}
+    console.log('Opened', eventSource.url)
+
+    eventSource.addEventListener('message', (event) => {
+      const [path, value] = JSON.parse(event.data)
+
+      status.value[path] = value
+    })
+  }
+})
 </script>
 
 <style scoped>

@@ -2,7 +2,7 @@
   <ul class="w-full p-2 h-12 flex space-x-2">
     <li class="flex-1"></li>
     <li class="flex align-center justify-center">
-      <select>
+      <select v-model="selectedInstance">
         <option
           v-for="instance in instances"
           :key="instance.id"
@@ -15,6 +15,7 @@
     <li class="flex w-8 h-8">
       <button
         class="flex align-center justify-center rounded-lg hover:bg-green-100"
+        @click="emit('debug', selectedInstance)"
       >
         <svg
           viewBox="0 0 16 16"
@@ -33,9 +34,13 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue'
+import { defineProps, ref, defineEmit } from 'vue'
 
 defineProps({
   instances: Array,
 })
+
+const emit = defineEmit(['debug'])
+
+const selectedInstance = ref(null)
 </script>

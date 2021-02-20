@@ -15,6 +15,7 @@ import equal from 'fast-deep-equal'
 
 const props = defineProps({
   root: Object,
+  status: Object,
   selected: Array,
 })
 
@@ -71,6 +72,7 @@ function convert(
     x,
     y: y,
     children,
+    status: props.status[path.join('.')],
     max_y: Math.max(child_y, y + height),
     max_x:
       Math.max(...children.map(({ max_x }) => MARGIN + max_x), 0) + max_width,
