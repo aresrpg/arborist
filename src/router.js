@@ -4,7 +4,7 @@ import Editor from './views/Editor.vue'
 const routes = [
   {
     path: '/',
-    redirect: `/${encodeURIComponent('http://localhost:4242/behavior/')}`,
+    redirect: `/${encodeURIComponent('http://localhost:4242/behavior')}`,
   },
   {
     path: '/:url/:tree?',
