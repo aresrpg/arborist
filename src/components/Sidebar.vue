@@ -23,14 +23,14 @@
     <li class="overflow-y-scroll">
       <ul>
         <li
-          v-for="(item, i) in items"
-          :key="i"
+          v-for="item in items"
+          :key="item.id"
           :class="`p-2 m-2 text-xl rounded-lg hover:bg-green-200 cursor-pointer ${
-            selected === i ? 'bg-green-400' : ''
+            selected === item.id ? 'bg-green-400' : ''
           }`"
-          @click="emit('select', i)"
+          @click="emit('select', item.id)"
         >
-          {{ item }}
+          {{ item.name }}
         </li>
       </ul>
     </li>
@@ -42,7 +42,7 @@ import { defineProps, defineEmit } from 'vue'
 
 defineProps({
   items: Array,
-  selected: Number,
+  selected: String,
 })
 
 const emit = defineEmit(['select'])

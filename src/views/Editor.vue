@@ -2,13 +2,13 @@
   <main class="w-full flex flex-row">
     <Sidebar
       class="w-2/12"
-      :items="trees.map(({ name }) => name)"
-      :selected="selectedTree"
-      @select="(i) => (selectedTree = i)"
+      :items="trees"
+      :selected="selectedTree.id"
+      @select="(id) => router.push({ params: { tree: id } })"
     />
     <div class="w-full flex flex-col">
       <Toolbar
-        :instances="trees[selectedTree].instances"
+        :instances="selectedTree.instances"
         @debug="(instance) => (debuggedInstance = instance)"
       />
       <Tree
@@ -23,16 +23,20 @@
 </template>
 
 <script setup>
-import { computed, ref, watch, watchEffect } from 'vue'
+import { computed, defineProps, ref, watch, watchEffect } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import equal from 'fast-deep-equal'
 
 import Tree from '../components/Tree.vue'
 import Sidebar from '../components/Sidebar.vue'
 import Toolbar from '../components/Toolbar.vue'
 
-const trees = await fetch('http://127.0.0.1:4242/behavior').then((res) =>
-  res.json()
-)
+const router = useRouter()
+const route = useRoute()
+
+const url = computed(() => decodeURIComponent(route.params.url))
+
+const trees = await fetch(url.value).then((res) => res.json())
 
 function parseNode(node) {
   return {
@@ -43,11 +47,14 @@ function parseNode(node) {
   }
 }
 
-const selectedTree = ref(0)
+const selectedTree = computed(
+  () => trees.find(({ id }) => id === route.params.tree) || trees[0]
+)
+router.push({ params: { tree: selectedTree.value.id } })
 
 const tree = computed(() =>
   parseNode(
-    new DOMParser().parseFromString(trees[selectedTree.value].tree, 'text/xml')
+    new DOMParser().parseFromString(selectedTree.value.tree, 'text/xml')
       .documentElement
   )
 )
@@ -76,9 +83,7 @@ watchEffect(() => {
   }
 
   if (debuggedInstance.value) {
-    eventSource = new EventSource(
-      `http://localhost:4242/behavior/${debuggedInstance.value}`
-    )
+    eventSource = new EventSource(`${url.value}/${debuggedInstance.value}`)
 
     status.value = {}
     console.log('Opened', eventSource.url)

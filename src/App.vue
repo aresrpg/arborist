@@ -1,7 +1,7 @@
 <template>
   <Suspense>
     <template #default>
-      <Editor />
+      <router-view></router-view>
     </template>
     <template #fallback>
       <div>Loading...</div>
@@ -9,9 +9,7 @@
   </Suspense>
 </template>
 
-<script setup>
-import Editor from './views/Editor.vue'
-</script>
+<script setup></script>
 
 <style>
 #app {
