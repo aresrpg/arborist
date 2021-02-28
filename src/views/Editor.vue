@@ -66,11 +66,7 @@ function select(path) {
   else selected.value = path
 }
 
-const status = ref({
-  0: 'FAILURE',
-  1: 'RUNNING',
-  2: 'SUCCESS',
-})
+const status = ref({})
 
 const debuggedInstance = ref(null)
 
