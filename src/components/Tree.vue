@@ -63,10 +63,11 @@ function convert(
     }
   )
 
-  const { name } = node
+  const { name, attributes } = node
 
   return {
     name,
+    attributes,
     width,
     height,
     x,

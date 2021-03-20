@@ -41,6 +41,10 @@ const trees = await fetch(url.value).then((res) => res.json())
 function parseNode(node) {
   return {
     name: node.tagName,
+    attributes: Array.from(node.attributes).map(({ nodeName, nodeValue }) => [
+      nodeName,
+      nodeValue,
+    ]),
     children: Array.from(node.childNodes)
       .filter((child) => child.nodeType === Node.ELEMENT_NODE)
       .map(parseNode),

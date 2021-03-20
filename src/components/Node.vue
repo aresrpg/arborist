@@ -6,7 +6,7 @@
       :width="node.width"
       :height="node.height"
       :class="`fill-current ${
-        node.selected ? 'text-gray-600' : 'text-gray-700'
+        node.selected ? 'text-gray-300' : 'text-gray-200'
       }`"
     />
     <rect
@@ -15,13 +15,20 @@
       :width="25"
       :height="node.height"
       :class="`fill-current ${
-        node.status ? COLORS[node.status] : 'text-gray-400'
+        node.status ? STATUS_COLORS[node.status] : color
+      }`"
+    />
+    <rect
+      :x="node.x"
+      :y="node.y"
+      :width="node.width"
+      :height="29"
+      :class="`fill-current ${
+        node.status ? STATUS_COLORS[node.status] : color
       }`"
     />
     <g
-      :transform="`translate(${0.5 + node.x} ${
-        node.y + (node.height - 24) / 2
-      })`"
+      :transform="`translate(${0.5 + node.x} ${node.y + (29 - 24) / 2})`"
       stroke-width="2"
       stroke-linecap="round"
       stroke-linejoin="round"
@@ -55,6 +62,11 @@
           d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
         />
       </template>
+      <template v-else>
+        <path
+          d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"
+        ></path>
+      </template>
     </g>
     <text
       :x="node.x + 30"
@@ -64,8 +76,18 @@
       :height="node.height"
       fill="white"
     >
-      {{ node.name }}</text
+      {{ node.name }}
+    </text>
+    <text
+      v-for="[i, [name, value]] in (node.attributes || []).entries()"
+      :key="name"
+      :x="node.x + 30"
+      :y="node.y + 29 + i * 19"
+      dominant-baseline="hanging"
+      fill="black"
     >
+      {{ name }}: {{ value }}
+    </text>
   </g>
 </template>
 
@@ -87,19 +109,26 @@ function textDimensions(text) {
   return { width, height }
 }
 
-export function dimensions({ name }) {
+export function dimensions({ name, attributes }) {
+  console.log(attributes)
   const text = textDimensions(name)
+  const attributesWidth = attributes
+    .map(([name, value]) => {
+      return textDimensions(`${name}: ${value}`).width
+    })
+    .reduce((current, value) => Math.max(current, value), 0)
+
   return {
-    width: text.width + 35,
-    height: text.height + 10,
+    width: Math.max(text.width, attributesWidth) + 25 + 10,
+    height: text.height + text.height * attributes.length + 10,
   }
 }
 </script>
 
 <script setup>
-import { defineProps, defineEmit } from 'vue'
+import { computed, defineProps, defineEmit } from 'vue'
 
-const COLORS = {
+const STATUS_COLORS = {
   SUCCESS: 'text-green-400',
   RUNNING: 'text-yellow-400',
   FAILURE: 'text-red-400',
@@ -108,6 +137,17 @@ const COLORS = {
 const props = defineProps({
   node: Object,
   path: Array,
+})
+
+function string_hash(str) {
+  return str
+    .split('')
+    .reduce((hash, c) => ((hash << 5) - hash + c.charCodeAt(0)) | 0, 0)
+}
+
+const color = computed(() => {
+  if (props.node.children.length > 0) return 'text-blue-500'
+  else return 'text-purple-500'
 })
 
 const emit = defineEmit(['select'])
