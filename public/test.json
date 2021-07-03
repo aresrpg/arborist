@@ -1,0 +1,8 @@
+[
+  {
+    "id": "Test",
+    "name": "Test",
+    "tree": "<reactive-fallback>\n\t<reactive-sequence>\n\t\t<get_biggest_damager output=\"damager\"/>\n\t\t<set_target input=\"damager\"/>\n\t\t<target_position output=\"position\"/>\n\t\t<goto target=\"position\" distance=\"2\"/>\n\t</reactive-sequence>\n\t<repeat>\n\t\t<fallback>\n\t\t\t<sequence>\n\t\t\t\t<random chance=\"0.16\"/>\n\t\t\t\t<random_block_position output=\"random_position\"/>\n\t\t\t\t<goto target=\"random_position\" distance=\"1\" ignore_y=\"true\"/>\n\t\t\t</sequence>\n\t\t\t<sequence>\n\t\t\t\t<random chance=\"0.20\"/>\n\t\t\t\t<look_at_player/>\n\t\t\t\t<sleep time=\"1\"/>\n\t\t\t</sequence>\n\t\t\t<sequence>\n\t\t\t\t<random chance=\"0.20\"/>\n\t\t\t\t<random_look_around/>\n\t\t\t\t<sleep time=\"1\"/>\n\t\t\t</sequence>\n\t\t\t<sleep time=\"1\"/>\n\t\t</fallback>\n\t</repeat>\n</reactive-fallback>",
+    "instances": []
+  }
+]
