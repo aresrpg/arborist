@@ -16,13 +16,13 @@
     />
     <rect
       :width="width"
-      :height="29"
+      :height="BASE_HEIGHT"
       :class="`fill-current ${
         node.status ? STATUS_COLORS[node.status] : color
       }`"
     />
     <g
-      :transform="`translate(${0.5} ${(29 - 24) / 2})`"
+      :transform="`translate(${0.5} ${(BASE_HEIGHT - 24) / 2})`"
       stroke-width="2"
       stroke-linecap="round"
       stroke-linejoin="round"
@@ -76,7 +76,7 @@
       v-for="[i, [name, value]] in (node.attributes || []).entries()"
       :key="name"
       :x="30"
-      :y="29 + i * 19"
+      :y="BASE_HEIGHT + i * 19"
       dominant-baseline="hanging"
       fill="black"
     >
@@ -87,6 +87,8 @@
 
 <script setup>
 import { computed, defineProps, defineEmit, onMounted, ref } from 'vue'
+
+const BASE_HEIGHT = 30
 
 const STATUS_COLORS = {
   SUCCESS: 'text-green-400',
