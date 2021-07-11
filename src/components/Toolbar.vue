@@ -34,7 +34,7 @@
 </template>
 
 <script setup>
-import { defineProps, ref, defineEmit } from 'vue'
+import { ref } from 'vue'
 
 defineProps({
   instances: Array,

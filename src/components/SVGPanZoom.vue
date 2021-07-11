@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import { defineProps, computed, ref, reactive } from 'vue'
+import { computed, ref, reactive } from 'vue'
 
 const SCALE_FACTOR = 1.2
 

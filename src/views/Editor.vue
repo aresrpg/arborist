@@ -23,7 +23,7 @@
 </template>
 
 <script setup>
-import { computed, defineProps, ref, watch, watchEffect } from 'vue'
+import { computed, ref, watch, watchEffect } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import equal from 'fast-deep-equal'
 

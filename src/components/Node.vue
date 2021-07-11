@@ -9,8 +9,6 @@
   />
 </template>
 <script setup>
-import { defineEmit, defineProps } from 'vue'
-
 import ParentNode from './ParentNode.vue'
 
 defineProps({

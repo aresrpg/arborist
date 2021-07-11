@@ -86,7 +86,7 @@
 </template>
 
 <script setup>
-import { computed, defineProps, defineEmit, onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 
 const BASE_HEIGHT = 30
 

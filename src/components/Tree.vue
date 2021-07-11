@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import { defineProps, reactive } from 'vue'
+import { reactive } from 'vue'
 
 import Node from './Node.vue'
 import SVGPanZoom from './SVGPanZoom.vue'

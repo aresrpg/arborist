@@ -8,7 +8,14 @@
     <ul class="flex flex-col items-center">
       <li class="my-4">
         <router-link
-          class="bg-green-500 hover:bg-green-700 text-white text-bold py-2 px-4 rounded"
+          class="
+            bg-green-500
+            hover:bg-green-700
+            text-white text-bold
+            py-2
+            px-4
+            rounded
+          "
           :to="`/${encodeURIComponent('/test.json')}`"
           >Test File</router-link
         >
@@ -20,7 +27,18 @@
         >
           <label class="text-gray-500 font-bold" for="custom">Custom URL</label>
           <input
-            class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-green-400"
+            class="
+              bg-gray-200
+              appearance-none
+              border-2 border-gray-200
+              rounded
+              w-full
+              py-2
+              px-4
+              text-gray-700
+              leading-tight
+              focus:outline-none focus:bg-white focus:border-green-400
+            "
             id="custom"
             v-model="custom"
           />

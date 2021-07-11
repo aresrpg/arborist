@@ -26,7 +26,7 @@
 </template>
 
 <script setup>
-import { nextTick, defineProps, defineEmit, ref, computed, watch } from 'vue'
+import { nextTick, ref, computed, watch } from 'vue'
 
 import SimpleNode from './SimpleNode.vue'
 import Node from './Node.vue'
