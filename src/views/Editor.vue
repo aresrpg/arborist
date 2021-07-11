@@ -54,7 +54,7 @@ function parseNode(node) {
 const selectedTree = computed(
   () => trees.find(({ id }) => id === route.params.tree) || trees[0]
 )
-router.push({ params: { tree: selectedTree.value.id } })
+router.replace({ params: { tree: selectedTree.value.id } })
 
 const tree = computed(() =>
   parseNode(
