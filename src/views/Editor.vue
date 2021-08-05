@@ -13,6 +13,7 @@
       />
       <Tree
         class="w-full h-full tree bg-green-700"
+        :key="selectedTree.id"
         :root="tree"
         @select="select"
         :selected="selected"
