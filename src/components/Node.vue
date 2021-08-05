@@ -5,6 +5,7 @@
     :y="y"
     :path="path"
     :horizontal="true"
+    :status="status"
     @size="(value) => emit('size', value)"
   />
 </template>
@@ -16,6 +17,7 @@ defineProps({
   path: Array,
   x: Number,
   y: Number,
+  status: Object,
 })
 
 const emit = defineEmit(['size'])

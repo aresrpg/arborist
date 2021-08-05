@@ -10,16 +10,12 @@
     <rect
       :width="25"
       :height="height"
-      :class="`fill-current ${
-        node.status ? STATUS_COLORS[node.status] : color
-      }`"
+      :class="`fill-current ${status ? STATUS_COLORS[status] : color}`"
     />
     <rect
       :width="width"
       :height="BASE_HEIGHT"
-      :class="`fill-current ${
-        node.status ? STATUS_COLORS[node.status] : color
-      }`"
+      :class="`fill-current ${status ? STATUS_COLORS[status] : color}`"
     />
     <g
       :transform="`translate(${0.5} ${(BASE_HEIGHT - 24) / 2})`"
@@ -29,10 +25,10 @@
       stroke="white"
       fill="none"
     >
-      <template v-if="node.status === 'SUCCESS'">
+      <template v-if="status === 'SUCCESS'">
         <path d="M5 13l4 4L19 7" />
       </template>
-      <template v-else-if="node.status === 'RUNNING'">
+      <template v-else-if="status === 'RUNNING'">
         <g>
           <path
             d="M6.569 19.127a8.96 8.96 0 01-3.223-4.805A8.96 8.96 0 019.682 3.347a8.96 8.96 0 014.312-.08m3.361 1.553a8.96 8.96 0 013.299 4.863v0a8.96 8.96 0 01-6.335 10.973 8.96 8.96 0 01-4.329.077"
@@ -51,7 +47,7 @@
           />
         </g>
       </template>
-      <template v-else-if="node.status === 'FAILURE'">
+      <template v-else-if="status === 'FAILURE'">
         <path
           d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
         />
@@ -101,6 +97,7 @@ const props = defineProps({
   x: Number,
   y: Number,
   path: Array,
+  status: String,
 })
 
 const color = computed(() => {

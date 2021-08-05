@@ -4,6 +4,7 @@
     :x="x"
     :y="y"
     :path="path"
+    :status="status[path.join('.')]"
     @size="(value) => (size = value)"
   />
 
@@ -20,6 +21,7 @@
       :x="child.x"
       :y="child.y"
       :path="[...path, i]"
+      :status="status"
       @size="(value) => (sizes[i] = value)"
     />
   </template>
@@ -39,6 +41,7 @@ const props = defineProps({
   x: Number,
   y: Number,
   horizontal: Boolean,
+  status: Object,
 })
 
 const sizes = ref([])

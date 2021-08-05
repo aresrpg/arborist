@@ -1,6 +1,13 @@
 <template>
   <SVGPanZoom :viewBox="`0 0 ${initialSize.width} ${initialSize.height}`">
-    <Node :node="root" :x="0" :y="0" :path="[]" @size="onSize" />
+    <Node
+      :node="root"
+      :x="0"
+      :y="0"
+      :path="[]"
+      :status="status"
+      @size="onSize"
+    />
   </SVGPanZoom>
 </template>
 
